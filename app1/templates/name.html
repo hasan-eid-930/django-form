@@ -1,0 +1,6 @@
+<form enctype="multipart/form-data" action="/app1/index/" method="post" novalidate >
+    {% csrf_token %}
+    {{ form }}
+    <hr>
+    <input type="submit" value="Submit">
+</form>

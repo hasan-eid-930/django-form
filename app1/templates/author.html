@@ -1,0 +1,7 @@
+<h3>create author</h3>
+<hr>
+<form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Send">
+</form>
