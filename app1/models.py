@@ -19,6 +19,9 @@ def validate_even(value):
         )
 def get_blog():
     return Blog.objects.filter(subject='s3')[0]
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return '{0}/{1}'.format(instance.name, filename)
 
 class Blog(models.Model):
     subject=models.CharField(max_length=50,choices=sub_choices,blank=False,default='s2')
@@ -36,18 +39,25 @@ class Article(models.Model):
         return self.title  
   
 class Person(models.Model):
-    name=models.CharField(max_length=50,null=True)
-    file=models.FileField(upload_to='uploaded_files')
-
+    name=models.CharField(max_length=50,primary_key=True)
+    # file=models.FileField(upload_to=user_directory_path)
+    
     def __str__(self) -> str:
         return self.name
+
+class Image(models.Model):
+    image=models.FileField(upload_to='images/')
+    person=models.ForeignKey(Person,on_delete=models.CASCADE)
+    
+    def __str__(self) -> str:
+        return self.img.file.name
     
 class Author(models.Model):
     name = models.CharField(max_length=200)
     age=models.IntegerField(default=25)
     slug=AutoSlugField(unique=True,populate_from='name',editable=True,default='xc', always_update=True)
     def get_absolute_url(self):
-        return reverse('author-delete', kwargs={'pk': self.pk}) 
+        return reverse('success', kwargs={'slug': self.slug}) 
     
     # def save(self, **kwargs):
     #     self.slug = slugify(self.name)

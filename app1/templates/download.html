@@ -1,0 +1,11 @@
+<h3>Persons</h3>
+<hr>
+<ul>
+    {% for person in persons %}
+        <!-- <li> <a href="/app1/download/{{person.name}}" download>{{ person.fullname }}</a></li> -->
+       <li><a href="{% url 'person_details' person.name %}">{{person.name}}</a></li>
+    {% empty %}
+        <li>No persons yet.</li>
+    {% endfor %}
+</ul>
+<!-- <p>{{p}}</p> -->
